@@ -27,11 +27,18 @@ THE SOFTWARE.
 #include "hip/hip_runtime.h"
 
 
-#ifdef NDEBUG
-#define HIP_ASSERT(x) x
-#else
-#define HIP_ASSERT(x) (assert((x)==hipSuccess))
-#endif
+#define HIP_ASSERT(ans)                                                                  \
+{                                                                                    \
+    errcheck((ans), __FILE__, __LINE__);                                            \
+}
+inline void
+errcheck(hipError_t code, const char* file, int line, bool abort = true){
+    if(code != hipSuccess){
+        fprintf(stderr, "Error: %s %s %d\n", hipGetErrorString(code), file, line);
+        if(abort)
+            exit(code);
+    }
+}
 
 
 #define WIDTH     1024
@@ -71,7 +78,7 @@ int main() {
   float* deviceC;
 
   hipDeviceProp_t devProp;
-  hipGetDeviceProperties(&devProp, 0);
+  HIP_ASSERT(hipGetDeviceProperties(&devProp, 0));
   cout << " System minor " << devProp.minor << endl;
   cout << " System major " << devProp.major << endl;
   cout << " agent prop name " << devProp.name << endl;
