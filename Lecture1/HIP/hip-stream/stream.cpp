@@ -184,9 +184,9 @@ int main(int argc, char** argv)
     printf(" Array size (%s precision) =%7.2f MB\n", sizeof(double)==sizeof(real)?"double":"single", double(N)*double(sizeof(real))/1.e6);
 
     /* Allocate memory on device */
-    hipMalloc((void**)&d_a, sizeof(real)*N);
-    hipMalloc((void**)&d_b, sizeof(real)*N);
-    hipMalloc((void**)&d_c, sizeof(real)*N);
+    (void)hipMalloc((void**)&d_a, sizeof(real)*N);
+    (void)hipMalloc((void**)&d_b, sizeof(real)*N);
+    (void)hipMalloc((void**)&d_c, sizeof(real)*N);
 
     /* Compute execution configuration */
     dim3 dimBlock(blockSize);
@@ -212,22 +212,22 @@ int main(int argc, char** argv)
     {
         times[0][k]= mysecond();
         STREAM_Copy<real><<<dimGrid, dimBlock, 0, 0>>>(d_a, d_c, N);
-        hipDeviceSynchronize();
+        (void)hipDeviceSynchronize();
         times[0][k]= mysecond() -  times[0][k];
 
         times[1][k]= mysecond();
         STREAM_Scale<real><<<dimGrid, dimBlock, 0, 0>>>(d_b, d_c, scalar, N);
-        hipDeviceSynchronize();
+        (void)hipDeviceSynchronize();
         times[1][k]= mysecond() -  times[1][k];
 
         times[2][k]= mysecond();
         STREAM_Add<real><<<dimGrid, dimBlock, 0, 0>>>(d_a, d_b, d_c, N);
-        hipDeviceSynchronize();
+        (void)hipDeviceSynchronize();
         times[2][k]= mysecond() -  times[2][k];
 
         times[3][k]= mysecond();
         STREAM_Triad<real><<<dimGrid, dimBlock, 0, 0>>>(d_b, d_c, d_a, scalar, N);
-        hipDeviceSynchronize();
+        (void)hipDeviceSynchronize();
         times[3][k]= mysecond() -  times[3][k];
     }
 
@@ -268,8 +268,8 @@ int main(int argc, char** argv)
 
 
     /* Free memory on device */
-    hipFree(d_a);
-    hipFree(d_b);
-    hipFree(d_c);
+    (void)hipFree(d_a);
+    (void)hipFree(d_b);
+    (void)hipFree(d_c);
 }
 
