@@ -26,13 +26,12 @@ make
 
 ### Basic examples
 
-`cd hip-training-series/Lecture1/vectorAdd `
+`cd hip-training-series/Lecture1/HIP/vectorAdd `
 
-For the portable Makefile system
+For Makefile system
 ```
 module load hip
 make vectoradd
-srun -n 8 ./vectoradd
 ```
 
 We can use a SLURM submission script, let's call it `hip_batch.sh`. 
