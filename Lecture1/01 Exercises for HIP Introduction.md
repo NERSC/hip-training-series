@@ -6,15 +6,14 @@ For the HIP Lecture Series, the examples can be retrieved from this repository.
 
 `git clone https://github.com/NERSC/hip-training-series`
 
-Then checkout the perlmutter branch:
+Then check out the perlmutter branch:
 `git checkout perlmutter`
 
 This markdown document is located at `'Lecture1/01 Exercises for HIP Introduction.md'` contains 
 the instructions to run the examples. 
 
 During the training session node reservation hours, get a slurm interactive session
-`salloc -N 1 -q shared -c 32 -G 1 -t 30:00 -A <a project> --reservation=hip_xxx`
-For session 1, use `-A ntrain8 --reservation=hip_aug14` in the above command.
+`salloc -N 1 -q shared -c 32 -G 1 -t 30:00 -A ntrain8 --reservation=hip_aug14`
 
 Outside the reservation hours,
 `salloc -N 1 -q interactive -c 32 -G 1 -t 30:00 -A <a project>`
