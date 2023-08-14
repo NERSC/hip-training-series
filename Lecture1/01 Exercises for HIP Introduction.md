@@ -13,10 +13,10 @@ This markdown document is located at `'Lecture1/01 Exercises for HIP Introductio
 the instructions to run the examples. 
 
 During the training session node reservation hours, get a slurm interactive session
-`salloc -N 1 -q shared -c 32 -G 1 -t 30:00 -A ntrain8 --reservation=hip_aug14`
+`salloc -N 1 -q shared -C gpu -c 32 -G 1 -t 30:00 -A ntrain8 --reservation=hip_aug14`
 
 Outside the reservation hours,
-`salloc -N 1 -q interactive -c 32 -G 1 -t 30:00 -A <a project>`
+`salloc -N 1 -q interactive -C gpu -c 32 -G 1 -t 30:00 -A <a project>`
 use your own project instead of ntrain8 if you have a NERSC regular project.
 
 ```
@@ -41,6 +41,7 @@ We can use a SLURM submission script, let's call it `hip_batch.sh`.
 #SBATCH -q shared
 #SBATCH -N 1
 #SBATCH --gpus=1
+#SBATCH -C gpu
 #SBATCH -G 1
 #SBATCH -t 10:00
 #SBATCH -A <your project id>
